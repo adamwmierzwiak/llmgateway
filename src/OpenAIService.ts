@@ -3,6 +3,11 @@ import type { ChatCompletionMessageParam, ChatCompletion, ChatCompletionChunk } 
 import { createByModelName } from '@microsoft/tiktokenizer';
 import type { CreateEmbeddingResponse } from 'openai/resources/embeddings';
 
+interface ParsingError {
+  error: string;
+  result: boolean;
+}
+
 export class OpenAIService {
   private openai: OpenAI;
   private tokenizers: Map<string, Awaited<ReturnType<typeof createByModelName>>> = new Map();
@@ -11,7 +16,9 @@ export class OpenAIService {
   private readonly IM_SEP = "<|im_sep|>";
 
   constructor() {
-    this.openai = new OpenAI();
+    this.openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
   }
 
   private async getTokenizer(modelName: string) {
