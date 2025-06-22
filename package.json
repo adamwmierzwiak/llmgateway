@@ -16,7 +16,8 @@
     "uuid": "^10.0.0"
   },
   "scripts": {
-    "start": "bun app.ts",
+    "start": "bun src/app.ts",
+    "server": "bun src/app.ts",
     "check-updates": "npm outdated",
     "check-security": "npm audit",
     "update-safe": "npm update",
