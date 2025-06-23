@@ -33,10 +33,10 @@ if (process.env.DEBUG_LOGGING === 'true') {
 
 // Routes
 app.post('/api/chat', chatMiddlewares, async (req: Request, res: Response, next: NextFunction) => {
-  const { messages, conversation_id = uuidv4() } = req.body;
+  const { messages, conversation_id = uuidv4(), model } = req.body;
 
   try {
-    const answer = await openaiService.completion({ messages }) as ChatCompletion;
+    const answer = await openaiService.completion({ messages, model }) as ChatCompletion;
     res.json({ ...answer, conversation_id });
   } catch (error) {
     next(error);

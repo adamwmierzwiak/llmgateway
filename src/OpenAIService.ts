@@ -17,7 +17,14 @@ export class OpenAIService {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: process.env.OPENROUTER_API_KEY,
+      baseURL: "https://openrouter.ai/api/v1",
+      defaultHeaders: {
+        // You can add optional headers here, e.g. HTTP-Referer, X-Title.
+        // Some OpenRouter models or providers may require specific headers for authentication, tracking, or usage policies.
+        // Only set headers that are required by the API or your use case. Avoid exposing sensitive information.
+        // For most use cases, you do NOT need to set any custom headers here.
+      },
     });
   }
 
@@ -55,7 +62,7 @@ export class OpenAIService {
     jsonMode?: boolean,
     maxTokens?: number
   }): Promise<OpenAI.Chat.Completions.ChatCompletion | AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>> {
-    const { messages, model = "gpt-4.1-mini", stream = false, jsonMode = false, maxTokens = 4096, temperature = 0 } = config;
+    const { messages, model = "deepseek/deepseek-r1-0528:free", stream = false, jsonMode = false, maxTokens = 4096, temperature = 0 } = config;
     try {
       const chatCompletion = await this.openai.chat.completions.create({
         messages,
